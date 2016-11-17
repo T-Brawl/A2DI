@@ -7,10 +7,10 @@ data_tp = np.c_[db['data'],db['target']]
 taille = len(data_tp)
 
 voisinage = -1
-pct_sample = 20
+pct_sample = 50
 dimension = len(db['data'][0])
 
-nbTests = 100
+nbTests = 20
 
 def setup_data(sample=pct_sample):    
     #print("Nombre d'exemples : {}".format(len(db['data'])))
@@ -53,7 +53,7 @@ def erreurVoisinage(voisinage):
                 erreur = erreur + 1        
     return (erreur / (nbTests * len(data_test)))
     
-def main(maxVoisins=20):
+def main(maxVoisins=100):
     lesY = []  
       
     for i in range(1,maxVoisins+1):

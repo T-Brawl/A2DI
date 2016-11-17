@@ -12,18 +12,16 @@ def genere_points():
 def classe(tab):
     lesClasses = []
     for point in tab:
-        print(point)
         lesClasses.append(1) if ( (-0.5 * point[0] + 0.75) <= point[1]) else lesClasses.append(-1)
     newTab = np.c_[tab,lesClasses]
     return newTab
 
 def montrer(tab,fct):
     for point in tab:
-        print(point)
         plt.plot(point[0],point[1],'bo' if (point[2] > 0) else 'ro')
         
     x = np.linspace(0,1,100) # 100 linearly spaced numbers
-    y = -1 * ( (fct[0] * x + fct[2]) / fct[1])
+    y = -1 * ( (fct[0] * x + fct[2]) / fct[1]) 
     plt.plot(x,y,'black')
     plt.xlim([0, 1])
     plt.ylim([0, 1])
@@ -38,8 +36,8 @@ def setup_data(tab,sample=pct_sample):
     return(data_app,data_test)
     
 def ptrain(data_app):
-    #theta = np.random.random((dimension + 1,))
-    theta = [0,0,0]
+    theta = np.random.random((dimension + 1,))
+    #theta = [-0.5,0,0.75]
     for vecteur in data_app:
         x_plus = np.append(vecteur[:dimension],1)
         f_x = np.transpose(theta).dot(x_plus)
