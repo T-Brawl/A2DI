@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 pct_sample = 80
 taille = 100
-nbTests = 10
+nbTests = 20
 
 def genere_points(dimension):
     return np.random.random((taille,dimension))    
@@ -25,13 +25,12 @@ def montrer(tab,tabbis,fct):
         
     x = np.linspace(0,1,100)
     y = -1 * ( (fct[0] * x + fct[2]) / fct[1]) 
-    plt.plot(x,y,'g--')
+    plt.plot(x,y,'k--')
     plt.xlim([0, 1])
     plt.ylim([0, 1])
     plt.show()
     
 def setup_data(tab,sample=pct_sample):    
-    
     np.random.shuffle(tab)
     combien = (int) ((sample/100)*taille)    
     data_app = tab[:combien]
@@ -71,27 +70,34 @@ def erreur(data,theta):
             erreur = erreur +1
     return (erreur / len(data))
     
-def main():
+def graphe():
     data = classe(genere_points(2))
     (train,test) = setup_data(data)
     theta =  ptrain(train)
     montrer(train,test,theta)
-"""
+    pct_classification = (1 - erreur(test,theta))
+    print("{:.2%} de bonne classfication".format(pct_classification))
+    
+def big_dimensions():
     lesX = []
     lesY = []
-    for i in range(2,5):
+    for i in range(2,20):
         erreur_moyenne = 0
         for c in range(0,nbTests):
             data = classe(genere_points(i))
             (train,test) = setup_data(data)
             theta = ptrain(train)
-            erreur_moyenne = erreur_moyenne + 1 - erreur(test,theta)
+            erreur_moyenne += 1 - erreur(test,theta)
         print(i)
         lesX.append(i)
         lesY.append(erreur_moyenne / nbTests)
     
-    plt.plot(lesX,lesY,'b--')
+    plt.plot(lesX,lesY,'bo',lesX,lesY,'b--')
     plt.show()
-"""    
+    
+def main():
+    #graphe()  
+    big_dimensions()
+   
 if __name__ == "__main__":
     main()

@@ -71,15 +71,21 @@ def main(maxVoisins=100):
     
 
 def time_kppv():
+    lesY = [] 
+    tests = 500
     for i in range(20,100,5):
         duration = 0
-        for appel in range(0,100):
+        for appel in range(0,tests):
             (train,test) = setup_data(i)
             debut = time.time()
-            kppv(test[np.random.randint(len(test))],train,5)
+            kppv(test[np.random.randint(len(test))],train,15)
             end = time.time()
-            duration = duration + (end - debut)
-        print("{} {}".format(i,duration / 100))
+            duration += ((end - debut) / tests)
+        lesY.append(duration)
+        print(i)
+    
+    plt.plot(range(20,100,5),lesY,'go',range(20,100,5),lesY,'k')
+    plt.show()
     
 if __name__ == "__main__":
     #main()
