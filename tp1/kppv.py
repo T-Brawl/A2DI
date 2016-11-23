@@ -2,15 +2,17 @@
 from sklearn import datasets
 import numpy as np
 import matplotlib.pyplot as plt
+import time
+
 db=datasets.load_iris()
 data_tp = np.c_[db['data'],db['target']]
 taille = len(data_tp)
 
 voisinage = -1
-pct_sample = 50
+pct_sample = 80
 dimension = len(db['data'][0])
 
-nbTests = 20
+nbTests = 10
 
 def setup_data(sample=pct_sample):    
     #print("Nombre d'exemples : {}".format(len(db['data'])))
@@ -50,8 +52,9 @@ def erreurVoisinage(voisinage):
         (data_app,data_test) = setup_data()  
         for vecteur in data_test:
             if(kppv(vecteur,data_app,voisinage) != vecteur[dimension]):
-                erreur = erreur + 1        
+                erreur = erreur + 1       
     return (erreur / (nbTests * len(data_test)))
+       
     
 def main(maxVoisins=100):
     lesY = []  
@@ -66,5 +69,18 @@ def main(maxVoisins=100):
     best = np.argsort(np.array(lesY))[len(lesY) - 1]
     print("Voisinage de taille {} : {} % de bonne classification".format(best+1,lesY[best]*100))
     
+
+def time_kppv():
+    for i in range(20,100,5):
+        duration = 0
+        for appel in range(0,100):
+            (train,test) = setup_data(i)
+            debut = time.time()
+            kppv(test[np.random.randint(len(test))],train,5)
+            end = time.time()
+            duration = duration + (end - debut)
+        print("{} {}".format(i,duration / 100))
+    
 if __name__ == "__main__":
-    main()
+    #main()
+    time_kppv()
