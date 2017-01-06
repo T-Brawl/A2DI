@@ -4,9 +4,11 @@ import matplotlib.pyplot as plt
 import math
 import random
 
+taille_sample = 90
+
 def datagen():
     #x = np.linspace(0,5,90)
-    x = np.linspace(-10,10,90)
+    x = np.linspace(-10,10,taille_sample)
     y = []
     Xtr = []
     Xte = []
@@ -15,9 +17,10 @@ def datagen():
 
     for i in range(len(x)):
         #y.append(np.random.normal(2*x[i]+1,0.2))
-        y.append(np.random.normal(math.sin(x[i]) / x[i],0.2))        
+        y.append(np.random.normal(math.sin(x[i]) / x[i],0.2))       
+        #y.append(math.sin(x[i]) / x[i])       
         
-        if (i % 3 == 0):
+        if (i % 3 != 0):
             Xtr.append(x[i])
             Ytr.append(y[i])
         else:
@@ -53,7 +56,7 @@ def montrer(X_train, X_test, Y_train, Y_test, fct=None):
         plt.plot(X_test[i],Y_test[i],'bo')
             
     if (fct != None):
-        x = np.linspace(-10,10,90)
+        x = np.linspace(-10,10,taille_sample)
         y = 0
         
         for p in range(len(fct)):
